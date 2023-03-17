@@ -1,3 +1,19 @@
 package com.example.mobile_zelzele_app
 
-data class News(var cityName: String, var districtName :String, var magnitude:String,var depth:String,var time:String,var passingTime:String)
+import com.google.gson.annotations.SerializedName
+
+
+data class News(
+    @SerializedName("start")
+    var cityName: String,
+    @SerializedName("end")
+    var districtName :String,
+    @SerializedName("orderby")
+    var magnitude:String,
+    @SerializedName("minmag")
+    var depth:String,
+    @SerializedName("limit")
+    var time:String,
+
+
+    )

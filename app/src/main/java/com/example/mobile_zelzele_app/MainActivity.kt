@@ -2,79 +2,78 @@ package com.example.mobile_zelzele_app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.mobile_zelzele_app.service.DepremAPIService
+import com.example.mobile_zelzele_app.service.DepremApi
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.observers.DisposableSingleObserver
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var newRecyclerView: RecyclerView
-    private lateinit var newArrayList: ArrayList<News>
-    lateinit var cityName:Array<String>
-    lateinit var districtName:Array<String>
-    lateinit var magnitude:Array<String>
-    lateinit var depth:Array<String>
-    lateinit var time:Array<String>
-    lateinit var passingTime:Array<String>
+
+    internal lateinit var jsonApi:DepremApi
+    internal lateinit var newRecyclerView:RecyclerView
+
+    private val disposable=CompositeDisposable()// kullan at her bir istek disposable olacak(devamlı acık kalması hafıza yönetimi acısından sıkıntılı)
+
+    val newsZelzele = MutableLiveData<List<News>>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
 
-        /* var superKahramanIsimleri=ArrayList<String>()
-         superKahramanIsimleri.add("batman")
-         superKahramanIsimleri.add("superman")
-         superKahramanIsimleri.add("Iron man")
-         superKahramanIsimleri.add("batman")
-         superKahramanIsimleri.add("superman")
-         superKahramanIsimleri.add("Iron man")
-         superKahramanIsimleri.add("batman")
-         superKahramanIsimleri.add("superman")
-         superKahramanIsimleri.add("Iron man")
-         superKahramanIsimleri.add("batman")
-         superKahramanIsimleri.add("superman")
-         superKahramanIsimleri.add("Iron man")
-         superKahramanIsimleri.add("batman")
-         superKahramanIsimleri.add("superman")
-         superKahramanIsimleri.add("Iron man")
-         superKahramanIsimleri.add("batman")
-         superKahramanIsimleri.add("superman")
-         superKahramanIsimleri.add("Iron man")
-         superKahramanIsimleri.add("batman")
-         superKahramanIsimleri.add("superman")
-         superKahramanIsimleri.add("Iron man")
-         superKahramanIsimleri.add("batman")
-         superKahramanIsimleri.add("superman")
-         superKahramanIsimleri.add("Iron man")
+        val retrofit=DepremAPIService.instance
+        jsonApi=retrofit.create(DepremApi::class.java)
 
-         //adapter
-         val layoutManager=LinearLayoutManager(this)
-         recyclerView.layoutManager=layoutManager;
 
-         val adapter=RecycleAdapter(superKahramanIsimleri)
-         recyclerView.adapter=adapter*/
-
-        cityName= arrayOf("izmir","adana","Muş","Elazığ")
-        districtName= arrayOf("bornova","merkez","merkez","merkez")
-        magnitude= arrayOf("3.1","4.0","2.6","4.8")
-        depth= arrayOf("9 km","16.5 km","6.2 km","7 km")
-        time= arrayOf("07.00 pm","09.30 pm","12.00 pm","10.30 pm")
-        passingTime= arrayOf("55 dakika önce","2 saat önce","3 saat önce","4 saat önce")
-
-        newRecyclerView=findViewById(R.id.recyclerView)
+        newRecyclerView=findViewById<RecyclerView>(R.id.recyclerView)
         newRecyclerView.layoutManager=LinearLayoutManager(this)
 
-        newArrayList= arrayListOf<News>()
-        getUserData()
+
+        verileriAl()
+        //getUserData()
+       /* val newsList = listOf(
+            News("Başlık 1", "İçerik 1","test","test2","test3","test4"),
+            News("Başlık 1", "İçerik 1","test","test2","test3","test4"),
+            News("Başlık 1", "İçerik 1","test","test2","test3","test4")
+
+        )
+        println("Liste eleman sayısıtest: ")
+        newsZelzele.value = newsList*/
+
+
+
+
 
     }
 
-    private fun getUserData() {
-        for (i in cityName.indices){
-            val news=News(cityName[i],districtName[i],magnitude[i],depth[i],time[i],passingTime[i])
-            newArrayList.add(news)
-        }
-        newRecyclerView.adapter=RecycleAdapter(newArrayList)
+    /*private fun getUserData() {
+        val news=News(cityName,districtName,magnitude,depth,time,passingTime)
+
+        val newsList=MutableLiveData<News>()
+        newRecyclerView.adapter=RecycleAdapter(newsList.value!!)
+    }*/
+
+    private fun verileriAl(){
+        disposable.add(
+            jsonApi.posts
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe{posts->displayData(posts)}
+        )
+
+
+
+    }
+
+    private fun displayData(posts:List<News>?){
+        val adapter=RecycleAdapter(this,posts!!)
+        newRecyclerView.adapter=adapter;
     }
 }

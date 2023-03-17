@@ -1,12 +1,13 @@
 package com.example.mobile_zelzele_app
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class RecycleAdapter(val newsList:ArrayList<News>) :RecyclerView.Adapter<RecycleAdapter.ZelzeleVH>(){
+class RecycleAdapter(internal var context: Context,private var newsList:List<News>) :RecyclerView.Adapter<RecycleAdapter.ZelzeleVH>(){
 
 
 
@@ -21,7 +22,6 @@ class RecycleAdapter(val newsList:ArrayList<News>) :RecyclerView.Adapter<Recycle
         holder.recyclerViewMagnitude.text=newsList[position].magnitude
         holder.recyclerViewDepth.text=newsList[position].depth
         holder.recyclerViewTime.text=newsList[position].time
-        holder.recyclerViewPassingTime.text=newsList[position].passingTime
     }
 
     override fun getItemCount(): Int {
@@ -34,6 +34,7 @@ class RecycleAdapter(val newsList:ArrayList<News>) :RecyclerView.Adapter<Recycle
         val recyclerViewMagnitude: TextView = itemView.findViewById(R.id.magnitude)
         val recyclerViewDepth: TextView = itemView.findViewById(R.id.depth)
         val recyclerViewTime: TextView = itemView.findViewById(R.id.time)
-        val recyclerViewPassingTime: TextView = itemView.findViewById(R.id.passingTime)
     }
+
+
 }
