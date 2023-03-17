@@ -14,13 +14,15 @@ object DepremAPIService {
         get() {
             if(ourinstance==null){
                 ourinstance=Retrofit.Builder()
-                    .baseUrl("https://api.berkealp.net/")
+                    .baseUrl("https://deprem.afad.gov.tr/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                     .build()
+
             }
             return ourinstance!!
         }
+
 
 
 }

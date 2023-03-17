@@ -21,8 +21,8 @@ class RecycleAdapter(internal var context: Context,private var newsList:List<New
     override fun onBindViewHolder(holder: ZelzeleVH, position: Int) {
         holder.recyclerViewCityName.text=newsList[position].cityName
         holder.recyclerViewCityDistrictName.text=newsList[position].districtName
-        holder.recyclerViewMagnitude.text=newsList[position].magnitude
-        holder.recyclerViewDepth.text=newsList[position].depth
+        holder.recyclerViewMagnitude.text=newsList[position].magnitude.toString()
+        holder.recyclerViewDepth.text=newsList[position].depth.toString()
         holder.recyclerViewTime.text=newsList[position].time
 
         val floatValue=newsList[position].magnitude.toFloat()
@@ -43,6 +43,7 @@ class RecycleAdapter(internal var context: Context,private var newsList:List<New
         newsList = newData
         notifyDataSetChanged() // Verilerin güncellendiğini bildirir
     }
+
     class ZelzeleVH(itemView:View):RecyclerView.ViewHolder(itemView) {
         val recyclerViewCityName: TextView = itemView.findViewById(R.id.cityName)
         val recyclerViewCityDistrictName: TextView = itemView.findViewById(R.id.cityDistrictName)

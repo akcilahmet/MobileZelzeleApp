@@ -10,11 +10,15 @@ import com.example.mobile_zelzele_app.service.DepremAPIService
 import com.example.mobile_zelzele_app.service.DepremApi
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.observers.DisposableObserver
+import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 class MainActivity : AppCompatActivity() {
 
     internal lateinit var jsonApi:DepremApi
     internal lateinit var newRecyclerView:RecyclerView
+
+    internal  lateinit var adapter: RecycleAdapter
 
     private val disposable=CompositeDisposable()// kullan at her bir istek disposable olacak(devamlı acık kalması hafıza yönetimi acısından sıkıntılı)
 
@@ -51,10 +55,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun verileriAl(){ // refresh btn clicke bağla
         disposable.add(
-            jsonApi.posts
+            jsonApi.getDeprem()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe{posts->displayData(posts)}
+                .subscribeWith(object :DisposableSingleObserver<List<News>>(){
+                    override fun onSuccess(t: List<News>) {
+
+                       displayData(t)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
+                    }
+
+                })
         )
 
     }
@@ -77,10 +91,20 @@ class MainActivity : AppCompatActivity() {
             } finally {
                 mHandler.postDelayed(this, mUpdateInterval)
                 disposable.add(
-                    jsonApi.posts
+                    jsonApi.getDeprem()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe{posts->displayData(posts)}
+                        .subscribeWith(object :DisposableSingleObserver<List<News>>(){
+                            override fun onSuccess(t: List<News>) {
+
+                                displayData(t)
+                            }
+
+                            override fun onError(e: Throwable) {
+                                e.printStackTrace()
+                            }
+
+                        })
                 )
             }
         }
