@@ -39,6 +39,10 @@ class RecycleAdapter(internal var context: Context,private var newsList:List<New
         return newsList.size
     }
 
+    fun updateData(newData: List<News>) {
+        newsList = newData
+        notifyDataSetChanged() // Verilerin güncellendiğini bildirir
+    }
     class ZelzeleVH(itemView:View):RecyclerView.ViewHolder(itemView) {
         val recyclerViewCityName: TextView = itemView.findViewById(R.id.cityName)
         val recyclerViewCityDistrictName: TextView = itemView.findViewById(R.id.cityDistrictName)
