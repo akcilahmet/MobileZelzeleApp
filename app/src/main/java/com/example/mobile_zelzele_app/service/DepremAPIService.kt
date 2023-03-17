@@ -14,7 +14,7 @@ object DepremAPIService {
         get() {
             if(ourinstance==null){
                 ourinstance=Retrofit.Builder()
-                    .baseUrl("https://deprem.afad.gov.tr/")
+                    .baseUrl("https://api.berkealp.net/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                     .build()

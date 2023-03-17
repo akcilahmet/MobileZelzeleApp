@@ -12,6 +12,6 @@ interface DepremApi {
     //deprem/kandilli/live
     //https://github.com/atilsamancioglu/BTK20-JSONVeriSeti/blob/master/besinler.json
 
-    @get:GET("apiv2/event/filter")
+    @get:GET("kandilli/index.php?all")
     val posts:Observable<List<News>>
 }

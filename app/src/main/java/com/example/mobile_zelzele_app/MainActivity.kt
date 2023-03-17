@@ -1,7 +1,9 @@
 package com.example.mobile_zelzele_app
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.LinearLayout
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +22,6 @@ class MainActivity : AppCompatActivity() {
 
     private val disposable=CompositeDisposable()// kullan at her bir istek disposable olacak(devamlı acık kalması hafıza yönetimi acısından sıkıntılı)
 
-    val newsZelzele = MutableLiveData<List<News>>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +33,10 @@ class MainActivity : AppCompatActivity() {
         jsonApi=retrofit.create(DepremApi::class.java)
 
 
-        newRecyclerView=findViewById<RecyclerView>(R.id.recyclerView)
+        newRecyclerView=findViewById(R.id.recyclerView)
         newRecyclerView.layoutManager=LinearLayoutManager(this)
+
+
 
 
         verileriAl()
@@ -74,6 +77,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun displayData(posts:List<News>?){
         val adapter=RecycleAdapter(this,posts!!)
+
+
         newRecyclerView.adapter=adapter;
     }
 }

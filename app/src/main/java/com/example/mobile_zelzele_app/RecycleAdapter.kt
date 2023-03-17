@@ -4,7 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 class RecycleAdapter(internal var context: Context,private var newsList:List<News>) :RecyclerView.Adapter<RecycleAdapter.ZelzeleVH>(){
@@ -22,6 +24,15 @@ class RecycleAdapter(internal var context: Context,private var newsList:List<New
         holder.recyclerViewMagnitude.text=newsList[position].magnitude
         holder.recyclerViewDepth.text=newsList[position].depth
         holder.recyclerViewTime.text=newsList[position].time
+
+        val floatValue=newsList[position].magnitude.toFloat()
+        val color = when {
+            floatValue >= 4 -> ContextCompat.getColor(holder.itemView.context, R.color.red)
+            floatValue >= 2 -> ContextCompat.getColor(holder.itemView.context, R.color.orange)
+            floatValue >= 1 -> ContextCompat.getColor(holder.itemView.context, R.color.yellow)
+            else -> R.color.yellow
+        }
+        holder.setColor(color)
     }
 
     override fun getItemCount(): Int {
@@ -34,6 +45,12 @@ class RecycleAdapter(internal var context: Context,private var newsList:List<New
         val recyclerViewMagnitude: TextView = itemView.findViewById(R.id.magnitude)
         val recyclerViewDepth: TextView = itemView.findViewById(R.id.depth)
         val recyclerViewTime: TextView = itemView.findViewById(R.id.time)
+        private val linearLayout: LinearLayout = itemView.findViewById(R.id.linearLayout)
+
+        fun setColor(color: Int) {
+            linearLayout.setBackgroundColor(color)
+        }
+
     }
 
 

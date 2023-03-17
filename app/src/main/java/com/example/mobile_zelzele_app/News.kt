@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName
 
 
 data class News(
-    @SerializedName("start")
+    @SerializedName("Region")
     var cityName: String,
-    @SerializedName("end")
+    @SerializedName("ID")
     var districtName :String,
-    @SerializedName("orderby")
+    @SerializedName("Magnitude")
     var magnitude:String,
-    @SerializedName("minmag")
+    @SerializedName("Depth")
     var depth:String,
-    @SerializedName("limit")
+    @SerializedName("Time")
     var time:String,
 
 
