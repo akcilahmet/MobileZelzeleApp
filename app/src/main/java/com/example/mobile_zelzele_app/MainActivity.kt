@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private val disposable=CompositeDisposable()
 
     private var mHandler = Handler(Looper.getMainLooper())
-    private var mUpdateInterval: Long = 60 * 1000 // Yenileme süresi (1 dakika)
+    private var mUpdateInterval: Long = 70 * 1000
 
 
 
