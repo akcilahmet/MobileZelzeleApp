@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobile_zelzele_app.service.DepremAPIService
@@ -13,6 +14,11 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableObserver
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
+
+import androidx.core.content.ContextCompat
+import android.animation.ValueAnimator
+import android.animation.ArgbEvaluator
+
 class MainActivity : AppCompatActivity() {
 
     internal lateinit var jsonApi:DepremApi
@@ -20,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     internal  lateinit var adapter: RecycleAdapter
 
-    private val disposable=CompositeDisposable()// kullan at her bir istek disposable olacak(devamlı acık kalması hafıza yönetimi acısından sıkıntılı)
+    private val disposable=CompositeDisposable()
 
 
 
@@ -33,7 +39,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-
+        val button = findViewById<Button>(R.id.refreshBtn)
+        refreshBtnClicked(button)
 
 
         //recycleView setup
@@ -44,40 +51,16 @@ class MainActivity : AppCompatActivity() {
         val itemDecoration = ItemOffsetDecoration(40)
         newRecyclerView.addItemDecoration(itemDecoration)
 
-
         startRepeatingTask()
 
 
 
     }
 
+    private fun recycleViewShowData(posts:List<News>?){
 
-
-    private fun verileriAl(){ // refresh btn clicke bağla
-        disposable.add(
-            DepremAPIService.getDeprem()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object :DisposableSingleObserver<List<News>>(){
-                    override fun onSuccess(t: List<News>) {
-
-                       displayData(t)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        e.printStackTrace()
-                    }
-
-                })
-        )
-
-    }
-
-    private fun displayData(posts:List<News>?){
-        DepremAPIService.deneme()
         val adapter=RecycleAdapter(this,posts!!)
         adapter.updateData(posts!!)
-        println("veriler güncellendi")
         newRecyclerView.adapter=adapter;
 
     }
@@ -98,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                         .subscribeWith(object :DisposableSingleObserver<List<News>>(){
                             override fun onSuccess(t: List<News>) {
 
-                                displayData(t)
+                                recycleViewShowData(t)
                             }
 
                             override fun onError(e: Throwable) {
@@ -109,6 +92,68 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
+    }
+
+    private fun refreshBtnClickedEarthquakeStatusUpdate(){
+        disposable.add(
+            DepremAPIService.getDeprem()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object :DisposableSingleObserver<List<News>>(){
+                    override fun onSuccess(t: List<News>) {
+
+                        recycleViewShowData(t)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
+                    }
+
+                })
+        )
+
+    }
+
+    private fun refreshBtnClicked(button: Button){
+
+        button.setOnClickListener {
+            refreshBtnClickedEarthquakeStatusUpdate()
+            setBtnClickedColorChanged(button)
+
+
+
+        }
+    }
+
+    private fun setBtnClickedColorChanged(button: Button){
+        val colorFrom = ContextCompat.getColor(this, R.color.colorPrimary)
+        val colorTo = ContextCompat.getColor(this, R.color.colorAccent)
+
+        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
+
+        colorAnimation.duration = 500
+
+        colorAnimation.addUpdateListener {
+            button.setBackgroundColor(it.animatedValue as Int)
+        }
+
+        colorAnimation.start()
+
+        Handler().postDelayed({
+            val colorBack = ContextCompat.getColor(this, R.color.colorPrimary)
+            val colorReturn = ContextCompat.getColor(this, R.color.colorAccent)
+
+            val colorBackAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorReturn, colorBack)
+
+            colorBackAnimation.duration = 500
+
+            colorBackAnimation.addUpdateListener {
+                button.setBackgroundColor(it.animatedValue as Int)
+            }
+
+            colorBackAnimation.start()
+        }, 1000)
+
     }
 
 }

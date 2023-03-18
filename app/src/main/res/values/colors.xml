@@ -10,6 +10,7 @@
     <color name="red">#FB8D8D</color>
     <color name="orange">#FDD19B</color>
     <color name="yellow">#EFF7CB</color>
-
+    <color name="colorPrimary">#E0E0E0</color>
+    <color name="colorAccent">#636363</color>
 
 </resources>
