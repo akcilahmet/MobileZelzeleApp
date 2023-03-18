@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobile_zelzele_app.util.DateUtil
+import org.w3c.dom.Text
 
 
 class RecycleAdapter(internal var context: Context,private var newsList:List<News>) :RecyclerView.Adapter<RecycleAdapter.ZelzeleVH>(){
@@ -25,8 +26,12 @@ class RecycleAdapter(internal var context: Context,private var newsList:List<New
         holder.recyclerViewCityDistrictName.text=newsList[position].districtName
         holder.recyclerViewMagnitude.text=newsList[position].magnitude.toString()
         holder.recyclerViewDepth.text=newsList[position].depth.toString()+"km"
-
         holder.recyclerViewTime.text=DateUtil.formatDateTime(newsList[position].time)
+
+
+        holder.recyclerViewPassingTime.text=DateUtil.dakikaGüncelleme(DateUtil.formatDateTime(newsList[position].time).toString())
+
+
 
         val floatValue=newsList[position].magnitude.toFloat()
         val color = when {
@@ -53,6 +58,7 @@ class RecycleAdapter(internal var context: Context,private var newsList:List<New
         val recyclerViewMagnitude: TextView = itemView.findViewById(R.id.magnitude)
         val recyclerViewDepth: TextView = itemView.findViewById(R.id.depth)
         val recyclerViewTime: TextView = itemView.findViewById(R.id.time)
+        val recyclerViewPassingTime:TextView=itemView.findViewById(R.id.passingTime)
         private val linearLayout: LinearLayout = itemView.findViewById(R.id.linearLayout)
 
         fun setColor(color: Int) {
