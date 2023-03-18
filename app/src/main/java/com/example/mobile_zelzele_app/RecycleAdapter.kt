@@ -8,6 +8,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mobile_zelzele_app.util.DateUtil
+
 
 class RecycleAdapter(internal var context: Context,private var newsList:List<News>) :RecyclerView.Adapter<RecycleAdapter.ZelzeleVH>(){
 
@@ -23,7 +25,8 @@ class RecycleAdapter(internal var context: Context,private var newsList:List<New
         holder.recyclerViewCityDistrictName.text=newsList[position].districtName
         holder.recyclerViewMagnitude.text=newsList[position].magnitude.toString()
         holder.recyclerViewDepth.text=newsList[position].depth.toString()+"km"
-        holder.recyclerViewTime.text=newsList[position].time
+
+        holder.recyclerViewTime.text=DateUtil.formatDateTime(newsList[position].time)
 
         val floatValue=newsList[position].magnitude.toFloat()
         val color = when {
