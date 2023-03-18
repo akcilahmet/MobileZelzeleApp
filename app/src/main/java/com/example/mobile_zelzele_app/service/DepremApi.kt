@@ -18,8 +18,7 @@ interface DepremApi {
 
 
 
-   /* @GET("apiv2/event/filter?start=2020-09-14%2010:00:00&end=2021-09-16%2010:00:00&limit=50")
-    fun getDeprem():Single<List<News>>*/
+
    @GET
    fun getDeprem(@Url url: String): Single<List<News>>
 

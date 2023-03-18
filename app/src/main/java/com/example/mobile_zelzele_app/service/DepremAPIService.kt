@@ -40,7 +40,7 @@ object DepremAPIService {
 
         val baseUrl = "https://deprem.afad.gov.tr/"
         val path = "apiv2/event/filter"
-        val queryParams = listOf("start" to "2021-09-14%2010:00:00", "end" to dateString+"%2010:00:00", "limit" to "20")
+        val queryParams = listOf("start" to "2021-09-14%2010:00:00", "end" to dateString+"%2010:00:00")
 
         val url = buildString {
             append(baseUrl)
@@ -51,8 +51,10 @@ object DepremAPIService {
 
         val uri = URI(url)
         val pathWithQueryParams = "${uri.path}?${uri.query}" // bu değer depremapiye atanacak
-        println("URl_pathwithQuery:  "+pathWithQueryParams)
-        return pathWithQueryParams+"&orderby=timedesc"+"&minmag=2.5"
+        val finishedPathWithQuery=pathWithQueryParams+"&minmag=3"+"&orderby=timedesc"
+        println("URl_pathwithQuery:  "+finishedPathWithQuery)
+        return finishedPathWithQuery
+
 
     }
 

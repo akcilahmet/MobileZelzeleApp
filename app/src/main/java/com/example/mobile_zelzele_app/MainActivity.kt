@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     private var mUpdateInterval: Long = 60 * 1000 // Yenileme süresi (1 dakika)
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -82,7 +83,6 @@ class MainActivity : AppCompatActivity() {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeWith(object :DisposableSingleObserver<List<News>>(){
                             override fun onSuccess(t: List<News>) {
-
                                 recycleViewShowData(t)
                             }
 

@@ -31,8 +31,8 @@ class RecycleAdapter(internal var context: Context,private var newsList:List<New
         val floatValue=newsList[position].magnitude.toFloat()
         val color = when {
             floatValue >= 4 -> ContextCompat.getColor(holder.itemView.context, R.color.red)
-            floatValue >= 2 -> ContextCompat.getColor(holder.itemView.context, R.color.orange)
-            floatValue >= 1 -> ContextCompat.getColor(holder.itemView.context, R.color.yellow)
+            floatValue >= 3.5 -> ContextCompat.getColor(holder.itemView.context, R.color.orange)
+            floatValue >= 3 -> ContextCompat.getColor(holder.itemView.context, R.color.yellow)
             else -> R.color.yellow
         }
         holder.setColor(color)
