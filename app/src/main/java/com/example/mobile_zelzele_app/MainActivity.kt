@@ -33,8 +33,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val retrofit=DepremAPIService.instance
-        jsonApi=retrofit.create(DepremApi::class.java)
+
+
 
         //recycleView setup
         newRecyclerView=findViewById(R.id.recyclerView)
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun verileriAl(){ // refresh btn clicke bağla
         disposable.add(
-            jsonApi.getDeprem()
+            DepremAPIService.getDeprem()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object :DisposableSingleObserver<List<News>>(){
@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayData(posts:List<News>?){
+        DepremAPIService.deneme()
         val adapter=RecycleAdapter(this,posts!!)
         adapter.updateData(posts!!)
         println("veriler güncellendi")
@@ -91,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             } finally {
                 mHandler.postDelayed(this, mUpdateInterval)
                 disposable.add(
-                    jsonApi.getDeprem()
+                    DepremAPIService.getDeprem()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeWith(object :DisposableSingleObserver<List<News>>(){

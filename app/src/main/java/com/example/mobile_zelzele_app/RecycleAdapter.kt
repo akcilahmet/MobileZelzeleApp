@@ -22,7 +22,7 @@ class RecycleAdapter(internal var context: Context,private var newsList:List<New
         holder.recyclerViewCityName.text=newsList[position].cityName
         holder.recyclerViewCityDistrictName.text=newsList[position].districtName
         holder.recyclerViewMagnitude.text=newsList[position].magnitude.toString()
-        holder.recyclerViewDepth.text=newsList[position].depth.toString()
+        holder.recyclerViewDepth.text=newsList[position].depth.toString()+"km"
         holder.recyclerViewTime.text=newsList[position].time
 
         val floatValue=newsList[position].magnitude.toFloat()
