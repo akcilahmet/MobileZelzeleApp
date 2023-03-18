@@ -28,11 +28,11 @@ object DepremAPIService {
     }
 
     fun getDeprem(): Single<List<News>> {
-        val url = deneme()
+        val url = updateURL()
         return getInstance().getDeprem(url)
     }
 
-    fun deneme(vararg strings: String): String{
+    fun updateURL(vararg strings: String): String{
         val currentDate = Date()
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")
         val dateString = dateFormat.format(currentDate)
