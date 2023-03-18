@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobile_zelzele_app.util.DateUtil
-import org.w3c.dom.Text
 
 
 class RecycleAdapter(internal var context: Context,private var newsList:List<News>) :RecyclerView.Adapter<RecycleAdapter.ZelzeleVH>(){
@@ -29,7 +28,7 @@ class RecycleAdapter(internal var context: Context,private var newsList:List<New
         holder.recyclerViewTime.text=DateUtil.formatDateTime(newsList[position].time)
 
 
-        holder.recyclerViewPassingTime.text=DateUtil.dakikaGüncelleme(DateUtil.formatDateTime(newsList[position].time).toString())
+        holder.recyclerViewPassingTime.text=DateUtil.getFormatPassingDateTime(DateUtil.formatDateTime(newsList[position].time).toString())
 
 
 

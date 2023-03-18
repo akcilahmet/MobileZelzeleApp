@@ -17,7 +17,7 @@ object DateUtil {
     }
 
 
-    fun dakikaGüncelleme(rawDateTime: String): String {
+    fun getFormatPassingDateTime(rawDateTime: String): String {
         val inputFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
         val date = inputFormat.parse(rawDateTime)
         val calendar = Calendar.getInstance().apply {
@@ -26,8 +26,8 @@ object DateUtil {
             }
         }
 
-        // 3 saat ekleyerek zaman farkını hesapla
-        val timeDiffMillis = Calendar.getInstance().timeInMillis - (calendar.timeInMillis - 3 * 60 * 60 * 1000)
+
+        val timeDiffMillis = Calendar.getInstance().timeInMillis - (calendar.timeInMillis )
         val daysDiff = TimeUnit.MILLISECONDS.toDays(timeDiffMillis)
         val hoursDiff = TimeUnit.MILLISECONDS.toHours(timeDiffMillis) - daysDiff * 24
         val minutesDiff = TimeUnit.MILLISECONDS.toMinutes(timeDiffMillis) - TimeUnit.HOURS.toMinutes(hoursDiff + daysDiff * 24)

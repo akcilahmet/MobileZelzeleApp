@@ -27,9 +27,9 @@ object DepremAPIService {
         return ourinstance!!
     }
 
-    fun getDeprem(): Single<List<News>> {
+    fun getEarthquake(): Single<List<News>> {
         val url = updateURL()
-        return getInstance().getDeprem(url)
+        return getInstance().getEarthquake(url)
     }
 
     fun updateURL(vararg strings: String): String{

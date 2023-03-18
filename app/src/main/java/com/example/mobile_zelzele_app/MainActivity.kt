@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         val itemDecoration = ItemOffsetDecoration(40)
         newRecyclerView.addItemDecoration(itemDecoration)
 
-        startRepeatingTask()
+        getEarthquakeStartRepeatingTask()
 
 
 
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun startRepeatingTask() {
+    private fun getEarthquakeStartRepeatingTask() {
         earthquakeStatusUpdate.run()
     }
 
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
             } finally {
                 mHandler.postDelayed(this, mUpdateInterval)
                 disposable.add(
-                    DepremAPIService.getDeprem()
+                    DepremAPIService.getEarthquake()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeWith(object :DisposableSingleObserver<List<News>>(){
@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun refreshBtnClickedEarthquakeStatusUpdate(){
         disposable.add(
-            DepremAPIService.getDeprem()
+            DepremAPIService.getEarthquake()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object :DisposableSingleObserver<List<News>>(){
