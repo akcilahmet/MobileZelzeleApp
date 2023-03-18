@@ -1,40 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#FAE9B5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#FAE9B5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/refreshBtn"
-        android:layout_width="67dp"
-        android:layout_height="53dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="#BFBDBD"
-        android:textAlignment="textEnd"
-        android:textColor="#414242"
-        android:textScaleX="1"
-        android:textSize="10sp"
-        app:icon="@android:drawable/ic_menu_rotate"
-        app:iconTint="#2F3030"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Refresh" />
+        <Button
+            android:id="@+id/refreshBtn"
+            android:layout_width="67dp"
+            android:layout_height="53dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#BFBDBD"
+            android:textAlignment="textEnd"
+            android:textColor="#414242"
+            android:textScaleX="1"
+            android:textSize="10sp"
+            app:icon="@android:drawable/ic_menu_rotate"
+            app:iconTint="#2F3030"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Refresh" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

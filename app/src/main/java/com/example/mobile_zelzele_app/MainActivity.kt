@@ -14,7 +14,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableObserver
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
-
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.core.content.ContextCompat
 import android.animation.ValueAnimator
 import android.animation.ArgbEvaluator
@@ -23,12 +23,10 @@ class MainActivity : AppCompatActivity() {
 
     internal lateinit var jsonApi:DepremApi
     internal lateinit var newRecyclerView:RecyclerView
-
+    internal lateinit var swipeRefreshLayout: SwipeRefreshLayout
     internal  lateinit var adapter: RecycleAdapter
 
     private val disposable=CompositeDisposable()
-
-
 
     private var mHandler = Handler(Looper.getMainLooper())
     private var mUpdateInterval: Long = 60 * 1000 // Yenileme süresi (1 dakika)
@@ -38,10 +36,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        //refrehBtnClicked
         val button = findViewById<Button>(R.id.refreshBtn)
         refreshBtnClicked(button)
 
+        //swipeRefresh
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
+        setRefreshLayout(swipeRefreshLayout)
 
         //recycleView setup
         newRecyclerView=findViewById(R.id.recyclerView)
@@ -64,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         newRecyclerView.adapter=adapter;
 
     }
+
     private fun startRepeatingTask() {
         earthquakeStatusUpdate.run()
     }
@@ -156,4 +158,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun setRefreshLayout(swipeRefreshLayout: SwipeRefreshLayout){
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshBtnClickedEarthquakeStatusUpdate()
+
+            swipeRefreshLayout.isRefreshing=false
+
+        }
+    }
 }

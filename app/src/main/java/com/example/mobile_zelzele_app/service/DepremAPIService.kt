@@ -51,7 +51,7 @@ object DepremAPIService {
 
         val uri = URI(url)
         val pathWithQueryParams = "${uri.path}?${uri.query}" // bu değer depremapiye atanacak
-        println("cıktıııııı "+pathWithQueryParams)
+        println("URl_pathwithQuery:  "+pathWithQueryParams)
         return pathWithQueryParams+"&orderby=timedesc"+"&minmag=2.5"
 
     }
